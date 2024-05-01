@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>SpringBootBankingAPI</artifactId>
+    <artifactId>spring-boot-banking-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringBootBankingAPI</name>
     <description>SpringBootBankingAPI</description>
