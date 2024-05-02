@@ -2,10 +2,10 @@ package org.example.spring_boot_bank_api.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.spring_boot_bank_api.models.responseModels.CustomErrorMessage;
-import org.example.spring_boot_bank_api.models.responseModels.CustomMetaDataDTO;
-import org.example.spring_boot_bank_api.models.responseModels.GenericSuccessResponseDTO;
-import org.example.spring_boot_bank_api.models.responseModels.WelcomeResponseModel;
+import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
+import org.example.spring_boot_bank_api.models.dtos.response.generic_response.CustomMetaDataDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.generic_response.GenericSuccessResponseDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.WelcomeResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package org.example.spring_boot_bank_api.models.responseModels;
+package org.example.spring_boot_bank_api.models.dtos.response.generic_response;
 
 import lombok.Builder;
 import lombok.Data;

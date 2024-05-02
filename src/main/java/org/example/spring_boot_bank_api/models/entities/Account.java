@@ -3,7 +3,7 @@ package org.example.spring_boot_bank_api.models.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.spring_boot_bank_api.enums.AccountType;
+import org.example.spring_boot_bank_api.constants.enums.AccountType;
 
 @Entity
 @Table(name = "accounts")

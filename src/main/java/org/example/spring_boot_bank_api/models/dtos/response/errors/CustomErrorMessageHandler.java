@@ -1,6 +1,5 @@
-package org.example.spring_boot_bank_api.errors;
+package org.example.spring_boot_bank_api.models.dtos.response.errors;
 
-import org.example.spring_boot_bank_api.models.responseModels.CustomErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

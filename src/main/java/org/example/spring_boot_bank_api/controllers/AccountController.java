@@ -1,7 +1,7 @@
 package org.example.spring_boot_bank_api.controllers;
 
 import org.example.spring_boot_bank_api.models.entities.Account;
-import org.example.spring_boot_bank_api.models.requestModels.CreateAccountRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.request.account.AccountRequestDTO;
 import org.example.spring_boot_bank_api.services.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping(value = "/accounts")
-    public ResponseEntity<Account> createNewAccount(@RequestBody CreateAccountRequestDTO createAccountRequestDTO){
+    public ResponseEntity<Account> createNewAccount(@RequestBody AccountRequestDTO createAccountRequestDTO){
         Account account = accountService.createNewAccount(createAccountRequestDTO);
         return ResponseEntity.ok(account);
     }

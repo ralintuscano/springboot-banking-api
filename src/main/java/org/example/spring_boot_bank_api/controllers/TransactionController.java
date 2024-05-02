@@ -1,7 +1,7 @@
 package org.example.spring_boot_bank_api.controllers;
 
 import org.example.spring_boot_bank_api.models.entities.Transaction;
-import org.example.spring_boot_bank_api.models.requestModels.CreateTransactionRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.services.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +25,14 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping("/transactions/deposit")
-    public <T> CreateTransactionRequestDTO deposit(@RequestBody CreateTransactionRequestDTO createTransactionRequestDTO) {
+    public <T> TransactionRequestDTO deposit(@RequestBody TransactionRequestDTO createTransactionRequestDTO) {
         log.debug("deposit: Type {} Value {}", createTransactionRequestDTO.getClass(), createTransactionRequestDTO);
         transactionService.deposit(createTransactionRequestDTO);
         return createTransactionRequestDTO;
     }
 
     @PostMapping("/transactions/withdraw")
-    public CreateTransactionRequestDTO withdraw(@RequestBody CreateTransactionRequestDTO createTransactionRequestDTO) {
+    public TransactionRequestDTO withdraw(@RequestBody TransactionRequestDTO createTransactionRequestDTO) {
         transactionService.withdraw(createTransactionRequestDTO);
         return createTransactionRequestDTO;
     }

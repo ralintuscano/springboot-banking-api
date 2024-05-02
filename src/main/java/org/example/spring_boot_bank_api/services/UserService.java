@@ -1,7 +1,7 @@
 package org.example.spring_boot_bank_api.services;
 
 import org.example.spring_boot_bank_api.models.entities.User;
-import org.example.spring_boot_bank_api.models.requestModels.CreateUserRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.request.user.UserRequestDTO;
 import org.example.spring_boot_bank_api.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createAccount(CreateUserRequestDTO createUserRequestDTO) {
+    public User createAccount(UserRequestDTO createUserRequestDTO) {
         User user = new User();
         user.setName(createUserRequestDTO.getName());
         user.setEmail(createUserRequestDTO.getEmail());

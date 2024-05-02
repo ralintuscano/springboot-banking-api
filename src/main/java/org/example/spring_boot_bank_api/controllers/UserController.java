@@ -2,7 +2,7 @@ package org.example.spring_boot_bank_api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.spring_boot_bank_api.models.entities.User;
-import org.example.spring_boot_bank_api.models.requestModels.CreateUserRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.request.user.UserRequestDTO;
 import org.example.spring_boot_bank_api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,7 +23,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createNewUser(@RequestBody CreateUserRequestDTO createUserRequestDTO){
+    public ResponseEntity<User> createNewUser(@RequestBody UserRequestDTO createUserRequestDTO){
 //        log.info("Create new user request: {}", createUserRequestDTO);
         User user = userService.createAccount(createUserRequestDTO);
         return ResponseEntity.ok(user);

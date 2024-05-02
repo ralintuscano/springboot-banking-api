@@ -3,8 +3,8 @@ package org.example.spring_boot_bank_api.services;
 import jakarta.transaction.Transactional;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
-import org.example.spring_boot_bank_api.models.requestModels.CreateTransactionRequestDTO;
-import org.example.spring_boot_bank_api.models.responseModels.CustomErrorMessage;
+import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
 import org.example.spring_boot_bank_api.repository.AccountRepository;
 import org.example.spring_boot_bank_api.repository.TransactionRepository;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class TransactionService {
     private AccountRepository accountRepository;
 
     @Transactional
-    public Transaction deposit(CreateTransactionRequestDTO createTransactionRequestDTO) {
+    public Transaction deposit(TransactionRequestDTO createTransactionRequestDTO) {
 
         Account account = accountService.getAccountById(createTransactionRequestDTO.getAccountId());
         Long currentAccountBalance = account.getAccountBalance();
@@ -44,7 +44,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public void withdraw(CreateTransactionRequestDTO createTransactionRequestDTO) {
+    public void withdraw(TransactionRequestDTO createTransactionRequestDTO) {
         Account account = accountService.getAccountById(createTransactionRequestDTO.getAccountId());
 
         Long currentAccountBalance = account.getAccountBalance();

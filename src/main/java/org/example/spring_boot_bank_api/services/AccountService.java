@@ -3,8 +3,8 @@ package org.example.spring_boot_bank_api.services;
 import lombok.extern.slf4j.Slf4j;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.User;
-import org.example.spring_boot_bank_api.models.requestModels.CreateAccountRequestDTO;
-import org.example.spring_boot_bank_api.models.responseModels.CustomErrorMessage;
+import org.example.spring_boot_bank_api.models.dtos.request.account.AccountRequestDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
 import org.example.spring_boot_bank_api.repository.AccountRepository;
 import org.example.spring_boot_bank_api.repository.UserRepository;
 import org.example.spring_boot_bank_api.utils.UUIDGenerator;
@@ -23,7 +23,7 @@ public class AccountService {
     @Autowired
     private UserRepository userRepository;
 
-    public Account createNewAccount(CreateAccountRequestDTO createAccountRequestDTO) {
+    public Account createNewAccount(AccountRequestDTO createAccountRequestDTO) {
         log.info("Creating new account {}", createAccountRequestDTO);
 
         Account account = new Account();
