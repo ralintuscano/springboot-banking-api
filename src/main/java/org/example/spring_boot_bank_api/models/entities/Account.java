@@ -21,9 +21,9 @@ public class Account {
 
     private Long accountBalance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+//    @JsonBackReference
     private User user;
 
 //    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

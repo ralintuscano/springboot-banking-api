@@ -21,7 +21,7 @@ public class Transaction {
 
     @ManyToOne()
     @JoinColumn(name = "account_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Account account;
 
 }

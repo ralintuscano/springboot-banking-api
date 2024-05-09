@@ -5,7 +5,6 @@ import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
-import org.example.spring_boot_bank_api.repository.AccountRepository;
 import org.example.spring_boot_bank_api.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,48 +21,37 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Transactional
-    public Transaction deposit(TransactionRequestDTO createTransactionRequestDTO) {
+    public Transaction deposit(Transaction transactionRequest) {
 
-        Account account = accountService.getAccountById(createTransactionRequestDTO.getAccountId());
+        Account account = transactionRequest.getAccount();
         Long currentAccountBalance = account.getAccountBalance();
-        Long updatedAccountBalance = Long.sum(currentAccountBalance, createTransactionRequestDTO.getAmount());
+        Long updatedAccountBalance = Long.sum(currentAccountBalance, transactionRequest.getAmount());
         log.info("Transaction deposited to account prev_balance {} updated balance {}", currentAccountBalance, updatedAccountBalance);
 
         accountService.updateAccountBalance(account.getAccountId(), updatedAccountBalance);
 
-        Transaction transaction = new Transaction();
-        transaction.setTransactionType(createTransactionRequestDTO.getTransactionType());
-        transaction.setAmount(createTransactionRequestDTO.getAmount());
-        transaction.setAccount(account);
+        log.debug("Transaction deposited to account balance {}", transactionRequest);
 
-        return transactionRepository.save(transaction);
+        return transactionRepository.save(transactionRequest);
     }
 
     @Transactional
-    public void withdraw(TransactionRequestDTO createTransactionRequestDTO) {
-        Account account = accountService.getAccountById(createTransactionRequestDTO.getAccountId());
+    public Transaction withdraw(Transaction transactionRequest) {
+        Account account = transactionRequest.getAccount();
 
         Long currentAccountBalance = account.getAccountBalance();
-        Long updatedAccountBalance = currentAccountBalance - createTransactionRequestDTO.getAmount();
 
-        Transaction transaction = new Transaction();
-        transaction.setAccount(account);
-        transaction.setTransactionType(createTransactionRequestDTO.getTransactionType());
-        transaction.setAmount(createTransactionRequestDTO.getAmount());
-
-        transactionRepository.save(transaction);
-
-
-
-        if(createTransactionRequestDTO.getAmount() > currentAccountBalance) {
+        if(transactionRequest.getAmount() > currentAccountBalance) {
             throw new CustomErrorMessage("Transaction amount exceeds current account balance");
         }
 
-        accountRepository.updateAccountBalance(account.getAccountId(), updatedAccountBalance);
+        Long updatedAccountBalance = currentAccountBalance - transactionRequest.getAmount();
+
+        accountService.updateAccountBalance(account.getAccountId(), updatedAccountBalance);
+
+        return transactionRepository.save(transactionRequest);
     }
 
     public List<Transaction> getTransactionsByAccountId(Long accountId) {

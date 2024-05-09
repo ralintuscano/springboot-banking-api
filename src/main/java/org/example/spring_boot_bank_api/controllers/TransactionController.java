@@ -1,11 +1,15 @@
 package org.example.spring_boot_bank_api.controllers;
 
+import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
+import org.example.spring_boot_bank_api.models.mappers.TransactionMapper;
 import org.example.spring_boot_bank_api.services.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,24 +28,43 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+    TransactionMapper transactionMapper;
+
     @PostMapping("/transactions/deposit")
-    public <T> TransactionRequestDTO deposit(@RequestBody TransactionRequestDTO createTransactionRequestDTO) {
-        log.debug("deposit: Type {} Value {}", createTransactionRequestDTO.getClass(), createTransactionRequestDTO);
-        transactionService.deposit(createTransactionRequestDTO);
-        return createTransactionRequestDTO;
+    public ResponseEntity<TransactionResponseDTO> deposit(@RequestBody TransactionRequestDTO transactionRequestDTO) {
+        log.debug("deposit: Type {} Value {}", transactionRequestDTO.getClass(), transactionRequestDTO);
+
+        Transaction transactionRequest = transactionMapper.transactionRequestDtoToTransaction(transactionRequestDTO);
+
+        Transaction transaction = transactionService.deposit(transactionRequest);
+
+        TransactionResponseDTO transactionResponseDTO = transactionMapper.transactionToTransactionResponseDto(transaction);
+
+        return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK);
     }
 
     @PostMapping("/transactions/withdraw")
-    public TransactionRequestDTO withdraw(@RequestBody TransactionRequestDTO createTransactionRequestDTO) {
-        transactionService.withdraw(createTransactionRequestDTO);
-        return createTransactionRequestDTO;
+    public ResponseEntity<TransactionResponseDTO> withdraw(@RequestBody TransactionRequestDTO transactionRequestDTO) {
+        Transaction transactionRequest = transactionMapper.transactionRequestDtoToTransaction(transactionRequestDTO);
+
+        Transaction transaction = transactionService.withdraw(transactionRequest);
+
+        TransactionResponseDTO  transactionResponseDTO= transactionMapper.transactionToTransactionResponseDto(transaction);
+
+        return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK);
     }
 //
 //    @PostMapping("/transactions/from/{from_accountId}/to/{to_accountId}")
 //    public Transaction transfer(@PathVariable Long from_accountId,@PathVariable Long to_accountId) {}
 
     @GetMapping("accounts/{accountId}/transactions")
-    public List<Transaction> getTransactionsByAccountId(@PathVariable Long accountId){
-        return transactionService.getTransactionsByAccountId(accountId);
+    public List<TransactionResponseDTO> getTransactionsByAccountId(@PathVariable Long accountId){
+
+        List<Transaction> transactions =  transactionService.getTransactionsByAccountId(accountId);
+
+        List<TransactionResponseDTO> transactionResponseDTOS = transactionMapper.transactionToTransactionResponseDtoList(transactions);
+
+        return transactionResponseDTOS;
     }
 }

@@ -1,10 +1,12 @@
 package org.example.spring_boot_bank_api.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.spring_boot_bank_api.models.dtos.request.account.AccountResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.User;
 import org.example.spring_boot_bank_api.models.dtos.request.account.AccountRequestDTO;
 import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
+import org.example.spring_boot_bank_api.models.mappers.AccountMapper;
 import org.example.spring_boot_bank_api.repository.AccountRepository;
 import org.example.spring_boot_bank_api.repository.UserRepository;
 import org.example.spring_boot_bank_api.utils.UUIDGenerator;
@@ -12,29 +14,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 public class AccountService {
-//    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private UserRepository userRepository;
+    private AccountMapper accountMapper;
 
-    public Account createNewAccount(AccountRequestDTO createAccountRequestDTO) {
-        log.info("Creating new account {}", createAccountRequestDTO);
+    /**TODO
+     * Find out how to include userId in the response
+     * Currently only account is returned, no related entities
+     */
 
-        Account account = new Account();
-        account.setAccountNumber(UUIDGenerator.generateUUID());
-        account.setAccountType(createAccountRequestDTO.getAccountType());
-        account.setAccountBalance(createAccountRequestDTO.getAccountBalance());
+    public Account createNewAccount(Account accountRequest) {
 
-        Optional<User> user = userRepository.findUserByUserId(createAccountRequestDTO.getUserId());
-        if(user.isEmpty()) {throw new CustomErrorMessage("User not found");}
-        account.setUser(user.get());
-        return accountRepository.save(account);
+        accountRequest.setAccountNumber(UUIDGenerator.generateUUID());
+
+        log.debug("SERVICE Before Create new account Account Entity {}", accountRequest);
+
+        return accountRepository.save(accountRequest);
     }
 
     public Account getAccountById(Long accountId) {
@@ -44,7 +44,6 @@ public class AccountService {
 
     public List<Account> getAccountsForUserByUserId(Long userId){
         log.info("Service - Retrieving accounts for user {}", userId);
-        log.debug("Service - Returned Result for user {} is response {}", userId, accountRepository.findAccountsByUser_UserId(userId));
         return accountRepository.findAccountsByUser_UserId(userId);
     }
 
