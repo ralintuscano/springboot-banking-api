@@ -54,9 +54,12 @@ public class TransactionController {
 
         return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK);
     }
-//
-//    @PostMapping("/transactions/from/{from_accountId}/to/{to_accountId}")
-//    public Transaction transfer(@PathVariable Long from_accountId,@PathVariable Long to_accountId) {}
+
+    @PostMapping("/transactions/transfer")
+    public ResponseEntity<String> transfer(@RequestBody TransactionRequestDTO transactionRequestDTO) {
+        String response  =  transactionService.makeTransfer(transactionRequestDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @GetMapping("accounts/{accountId}/transactions")
     public List<TransactionResponseDTO> getTransactionsByAccountId(@PathVariable Long accountId){
