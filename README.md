@@ -11,6 +11,14 @@ This project showcases a simple yet robust Spring Boot API for managing banking 
 - **Get Users:** Fetch details of all users.
 - **Get All Transactions:** Fetch all transactions for a user/account.
 
+## Technologies Used
+- Spring Boot
+- PostgreSQL
+- Lombok
+- hibernate
+- Mapstruct
+- Postman
+
 ## Core Components
 
 - **Controller:** Implements RESTful endpoints for handling HTTP requests.
