@@ -1,7 +1,7 @@
 package org.example.spring_boot_bank_api.models.mappers;
 
 import org.example.spring_boot_bank_api.models.dtos.request.user.UserRequestDTO;
-import org.example.spring_boot_bank_api.models.dtos.request.user.UserResponseDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.user.UserResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

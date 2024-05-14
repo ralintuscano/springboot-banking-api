@@ -1,4 +1,4 @@
-package org.example.spring_boot_bank_api.models.dtos.request.user;
+package org.example.spring_boot_bank_api.models.dtos.response.user;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package org.example.spring_boot_bank_api.models.dtos.request.transaction;
+package org.example.spring_boot_bank_api.models.dtos.response.transaction;
 
 import lombok.Data;
 import org.example.spring_boot_bank_api.constants.enums.TransactionType;

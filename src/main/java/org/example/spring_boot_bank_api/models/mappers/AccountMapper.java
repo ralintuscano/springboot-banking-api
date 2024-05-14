@@ -1,7 +1,7 @@
 package org.example.spring_boot_bank_api.models.mappers;
 
 import org.example.spring_boot_bank_api.models.dtos.request.account.AccountRequestDTO;
-import org.example.spring_boot_bank_api.models.dtos.request.account.AccountResponseDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.account.AccountResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.User;
 import org.example.spring_boot_bank_api.services.UserService;

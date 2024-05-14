@@ -1,13 +1,11 @@
 package org.example.spring_boot_bank_api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.spring_boot_bank_api.models.dtos.request.user.UserResponseDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.user.UserResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.User;
 import org.example.spring_boot_bank_api.models.dtos.request.user.UserRequestDTO;
 import org.example.spring_boot_bank_api.models.mappers.UserMapper;
 import org.example.spring_boot_bank_api.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

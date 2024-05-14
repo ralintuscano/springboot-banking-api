@@ -1,6 +1,6 @@
 package org.example.spring_boot_bank_api.controllers;
 
-import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionResponseDTO;
+import org.example.spring_boot_bank_api.models.dtos.response.transaction.TransactionResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.models.mappers.TransactionMapper;
