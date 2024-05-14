@@ -1,6 +1,10 @@
 package org.example.spring_boot_bank_api.services;
 
 import jakarta.transaction.Transactional;
+import org.example.spring_boot_bank_api.constants.enums.TransactionType;
+import org.example.spring_boot_bank_api.exceptions.IllegalWithdrawAmount;
+import org.example.spring_boot_bank_api.exceptions.TransactionFailed;
+import org.example.spring_boot_bank_api.exceptions.TransactionNotFound;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
@@ -15,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -45,22 +50,25 @@ public class TransactionService {
     @Transactional
     public Transaction withdraw(Transaction transactionRequest) {
         Account account = transactionRequest.getAccount();
-
         Long currentAccountBalance = account.getAccountBalance();
 
-        if(transactionRequest.getAmount() > currentAccountBalance) {
-            throw new CustomErrorMessage("Transaction amount exceeds current account balance");
-        }
+        if(transactionRequest.getAmount() > currentAccountBalance)
+            throw new IllegalWithdrawAmount("Transaction amount exceeds current account balance");
 
         Long updatedAccountBalance = currentAccountBalance - transactionRequest.getAmount();
-
         accountService.updateAccountBalance(account.getAccountId(), updatedAccountBalance);
 
         return transactionRepository.save(transactionRequest);
     }
 
-    @Transactional
+    /*
+    * TODO
+    *  Rewrite make transfer implementation with good design
+    * */
+
+    @Transactional(rollbackOn = TransactionFailed.class )
     public String makeTransfer(TransactionRequestDTO transactionRequestDTO) {
+
         Long sourceAccountId = transactionRequestDTO.getSourceAccountId();
         Long targetAccountId = transactionRequestDTO.getTargetAccountId();
 
@@ -69,9 +77,11 @@ public class TransactionService {
 
         Transaction debitTransaction = transactionMapper.transactionRequestDtoToTransaction(transactionRequestDTO);
         debitTransaction.setAccount(sourceAccount);
+        debitTransaction.setTransactionType(TransactionType.DEBIT);
 
         Transaction creditTransaction = transactionMapper.transactionRequestDtoToTransaction(transactionRequestDTO);
         creditTransaction.setAccount(targetAccount);
+        creditTransaction.setTransactionType(TransactionType.CREDIT);
 
         this.withdraw(debitTransaction);
         this.deposit(creditTransaction);
@@ -79,6 +89,11 @@ public class TransactionService {
         return "Successfully transaction";
     }
     public List<Transaction> getTransactionsByAccountId(Long accountId) {
-        return transactionRepository.findTransactionByAccount_AccountId(accountId);
+
+        Optional<List<Transaction>> transactionList = transactionRepository.findTransactionByAccount_AccountId(accountId);
+        if(transactionList.isPresent() && transactionList.get().isEmpty()){
+            throw new TransactionNotFound("Transaction(s) Not Found for account id " + accountId);
+        }
+        return transactionList.get();
     }
 }
