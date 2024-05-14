@@ -3,7 +3,6 @@ package org.example.spring_boot_bank_api.services;
 import org.example.spring_boot_bank_api.exceptions.UserAlreadyExists;
 import org.example.spring_boot_bank_api.exceptions.UserNotFound;
 import org.example.spring_boot_bank_api.models.entities.User;
-import org.example.spring_boot_bank_api.models.dtos.request.user.UserRequestDTO;
 import org.example.spring_boot_bank_api.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

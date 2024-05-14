@@ -4,19 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.spring_boot_bank_api.exceptions.AccountAlreadyExists;
 import org.example.spring_boot_bank_api.exceptions.AccountNotFound;
 import org.example.spring_boot_bank_api.exceptions.NoAccountsFoundForUser;
-import org.example.spring_boot_bank_api.models.dtos.request.account.AccountResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
-import org.example.spring_boot_bank_api.models.entities.User;
-import org.example.spring_boot_bank_api.models.dtos.request.account.AccountRequestDTO;
-import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
-import org.example.spring_boot_bank_api.models.mappers.AccountMapper;
 import org.example.spring_boot_bank_api.repository.AccountRepository;
-import org.example.spring_boot_bank_api.repository.UserRepository;
 import org.example.spring_boot_bank_api.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +18,6 @@ import java.util.Optional;
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
-    @Autowired
-    private AccountMapper accountMapper;
 
     /**TODO
      * Find out how to include userId in the response

@@ -1,15 +1,11 @@
 package org.example.spring_boot_bank_api.models.mappers;
 
-import org.example.spring_boot_bank_api.constants.enums.TransactionType;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionResponseDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
-import org.example.spring_boot_bank_api.repository.AccountRepository;
 import org.example.spring_boot_bank_api.services.AccountService;
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 /**

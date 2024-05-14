@@ -8,14 +8,11 @@ import org.example.spring_boot_bank_api.exceptions.TransactionNotFound;
 import org.example.spring_boot_bank_api.models.dtos.request.transaction.TransactionRequestDTO;
 import org.example.spring_boot_bank_api.models.entities.Account;
 import org.example.spring_boot_bank_api.models.entities.Transaction;
-import org.example.spring_boot_bank_api.models.dtos.response.errors.CustomErrorMessage;
 import org.example.spring_boot_bank_api.models.mappers.TransactionMapper;
 import org.example.spring_boot_bank_api.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,10 +58,10 @@ public class TransactionService {
         return transactionRepository.save(transactionRequest);
     }
 
-    /*
-    * TODO
+    /**
+     * TODO
     *  Rewrite make transfer implementation with good design
-    * */
+    */
 
     @Transactional(rollbackOn = TransactionFailed.class )
     public String makeTransfer(TransactionRequestDTO transactionRequestDTO) {
