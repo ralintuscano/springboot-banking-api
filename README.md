@@ -1,4 +1,4 @@
-# springboot-rest-api
+# Spring Boot Banking API
 
 This project showcases a simple yet robust Spring Boot API for managing banking operations.
 
